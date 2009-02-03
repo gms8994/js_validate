@@ -1,0 +1,103 @@
+<html>
+	<head>
+		<script language="JavaScript" src="../app/jsUnitCore.js"></script>
+		<script language="JavaScript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+		<script language="JavaScript" src="/js/validator2.js.orig"></script>
+		<script language="JavaScript" src="/js/scripts.js"></script>
+		<script language="JavaScript">
+function setUp() {
+	doAlert = false;
+}
+
+function testPluralize() {
+	assertEquals("0 of item 'horse' is 'horses'", "horses", pluralize("horse", 0));
+	assertEquals("1 of item 'horse' is 'horse'", "horse", pluralize("horse", 1));
+	assertEquals("2 of item 'horse' is 'horses'", "horses", pluralize("horse", 2));
+	assertEquals("0 of item 'box' is 'boxes'", "boxes", pluralize("box", 0));
+	assertEquals("1 of item 'box' is 'box'", "box", pluralize("box", 1));
+	assertEquals("2 of item 'box' is 'boxes'", "boxes", pluralize("box", 2));
+}
+
+function testreturnLabelText() {
+	assertEquals("Label for item1", "Label for item1", returnLabelText("item1"));
+	assertEquals("Label for item2", "", returnLabelText("item2"));
+	assertEquals("Label for item3 (nonexistant)", "", returnLabelText("item3"));
+	assertEquals("Label for item4", "Label for item4", returnLabelText("item4"));
+	assertEquals("Label for item5", "Label for item5", returnLabelText("item5"));
+	assertEquals("Label for item6", "Label for item6", returnLabelText("item6"));
+}
+
+function testRequired() {
+	assertFalse("Required text does not pass", validateField(document.getElementById("r_t1")));
+	assertTrue("Required text passes", validateField(document.getElementById("r_t2")));
+	assertFalse("Required password does not pass", validateField(document.getElementById("r_p1")));
+	assertTrue("Required password passes", validateField(document.getElementById("r_p2")));
+	assertFalse("Required select does not pass", validateField(document.getElementById("r_s1")));
+	assertTrue("Required select passes", validateField(document.getElementById("r_s2")));
+	assertFalse("Required legend does not pass", validateField(document.getElementById("r_l1")));
+	assertTrue("Required legend passes", validateField(document.getElementById("r_l2")));
+}
+
+function testHumanName() {
+	assertFalse("Human name does not pass", validateField(document.getElementById("hn_t1")));
+	assertFalse("Human name (test) does not pass", validateField(document.getElementById("hn_t2")));
+	assertTrue("Human name passes", validateField(document.getElementById("hn_t3")));
+}
+
+function testEmail() {
+	assertFalse("Email does not pass", validateField(document.getElementById("e_t1")));
+	assertFalse("Email (test) does not pass", validateField(document.getElementById("e_t2")));
+	assertTrue("Email passes", validateField(document.getElementById("e_t3")));
+	// TODO: FIX FOR THIS TEST
+	// assertFalse("Email te@st@test.com does not pass", validateField(document.getElementById("e_t4")));
+	assertTrue("Email passes", validateField(document.getElementById("e_t5")));
+	assertTrue("Email passes", validateField(document.getElementById("e_t6")));
+	assertFalse("Email does not pass", validateField(document.getElementById("e_t7")));
+	assertFalse("Email does not pass", validateField(document.getElementById("e_t8")));
+	assertTrue("Email passes", validateField(document.getElementById("e_t9")));
+	assertTrue("Email passes", validateField(document.getElementById("e_t10")));
+	assertFalse("Email does not pass", validateField(document.getElementById("e_t11")));
+}
+		</script>
+	</head>
+	<body>
+		<!-- testing for label -->
+		<label for="item1">Label for item1</label><input type="text" id="item1" />
+		<label for="item2"></label><input type="text" id="item2" />
+		<label for="item4">Label for item4</label><input type="text" id="item4" class="required" />
+		<label for="item5">Label for item5 </label><input type="text" id="item5" class="required" />
+		<label for="item6"> Label for item6</label><input type="text" id="item6" class="required" />
+		<!-- testing for label -->
+
+		<!-- testing for required -->
+		<input type="text" id="r_t1" class="required">
+		<input type="text" id="r_t2" class="required" value="test">
+		<input type="password" id="r_p1" class="required">
+		<input type="password" id="r_p2" class="required" value="test">
+		<select id="r_s1" class="required"><option value="0"></option><option value="2"></option></select>
+		<select id="r_s2" class="required"><option value="0"></option><option value="2" selected></option></select>
+		<fieldset><legend class="required" id="r_l1"></legend><input type="checkbox" /></fieldset>
+		<fieldset><legend class="required" id="r_l2"></legend><input type="checkbox" checked /></fieldset>
+		<!-- testing for required -->
+
+		<!-- testing for human name -->
+		<input type="text" id="hn_t1" class="humanname">
+		<input type="text" id="hn_t2" class="humanname" value="test">
+		<input type="text" id="hn_t3" class="humanname" value="billy bob">
+		<!-- testing for human name -->
+
+		<!-- testing for email -->
+		<input type="text" id="e_t1" class="email">
+		<input type="text" id="e_t2" class="email" value="test">
+		<input type="text" id="e_t3" class="email" value="test@test.com">
+		<input type="text" id="e_t4" class="email" value="te@st@test.com">
+		<input type="text" id="e_t5" class="email" value="test@te.st.com">
+		<input type="text" id="e_t6" class="email" value="t.est@te.st.com">
+		<input type="text" id="e_t7" class="email" value="t.est@te.735">
+		<input type="text" id="e_t8" class="email" value="t.est@te.c">
+		<input type="text" id="e_t9" class="email" value="t.est@te.com">
+		<input type="text" id="e_t10" class="email" value="t.est@te.museum">
+		<input type="text" id="e_t11" class="email" value="t.est@te.museumt">
+		<!-- testing for email -->
+	</body>
+</html>
