@@ -194,7 +194,8 @@ function validateField(fObj) {
 				}
 				break;
             case 'float':
-                if (!fObj.value.match(/^\d+(\.\d+)?$/)) {
+                if (fObj.value.match(/^\d+(\.\d+)?$/) || fObj.value.match(/^$/)) {
+                } else {
                     return handleError({'txt':lblText+' may only contain numbers and a single decimal!'});
                 }
                 break;
